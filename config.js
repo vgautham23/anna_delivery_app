@@ -4,3 +4,8 @@
 export const IGNORE_ADDRESSES = [
   '796 Bloor St West',
 ];
+
+// Usage counter (GoatCounter). Put your site code here, e.g. 'annadelivery' for
+// https://annadelivery.goatcounter.com — leave empty to turn counting off.
+// Only these counts are sent: "camera scan" and "select area". No photos or addresses.
+export const GOATCOUNTER_CODE = '';

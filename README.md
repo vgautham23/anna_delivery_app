@@ -42,3 +42,13 @@ Or drag the folder into https://app.netlify.com/drop (no account setup beyond si
 - English/Latin script only. If a scan misses, the address box can be edited and the map updates as you type.
 - If rule-based detection proves not good enough on your real bills, a paid AI step (a few cents per
   1,000 scans) can be added later as a fallback, only for scans that come back "Please check".
+
+## Usage dashboard (private)
+Counts of **camera scans** and **"select area"** uses are sent to [GoatCounter](https://www.goatcounter.com).
+Only the event name is sent: no photos, addresses or cookies. The dashboard needs your login, so app users can't see it.
+
+1. Sign up at goatcounter.com and pick a site code (e.g. `annadelivery`).
+2. Put it in `config.js`: `export const GOATCOUNTER_CODE = 'annadelivery';`
+3. Open `https://annadelivery.goatcounter.com`. Counts appear under **camera-scan** and **select-area**.
+
+Note: GoatCounter's free plan is for non-commercial use. Some ad blockers block it, so counts can be slightly low.

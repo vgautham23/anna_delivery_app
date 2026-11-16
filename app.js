@@ -1,5 +1,7 @@
 import { extractAddressFromRegions, cleanAddressText } from './address.js';
 import { regionsFromOcr } from './layout.js';
+import { openNavigation } from './nav.js';
+import { initAnalytics, track } from './analytics.js';
 
 const $ = (id) => document.getElementById(id);
 const screens = ['home', 'processing', 'result'];
@@ -122,8 +124,6 @@ function setProgress(pct, text) {
 // ---------- result screen ----------
 
 const mapEmbed = (q) => `https://maps.google.com/maps?q=${encodeURIComponent(q)}&z=16&output=embed`;
-const navUrl = (q) =>
-  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}&travelmode=driving`;
 
 let mapTimer;
 function updateMap() {
@@ -287,7 +287,10 @@ async function readSelectedArea() {
 // ---------- wiring ----------
 
 $('cameraBtn').addEventListener('click', () => $('fileInput').click());
-$('fileInput').addEventListener('change', (e) => handleFile(e.target.files[0]));
+$('fileInput').addEventListener('change', (e) => {
+  if (e.target.files[0]) track('camera-scan', 'Camera scan');
+  handleFile(e.target.files[0]);
+});
 $('addressBox').addEventListener('input', updateMap);
 $('retryBtn').addEventListener('click', () => {
   show('home');
@@ -295,10 +298,14 @@ $('retryBtn').addEventListener('click', () => {
 });
 $('confirmBtn').addEventListener('click', () => {
   const q = $('addressBox').value.trim();
-  if (q) window.location.href = navUrl(q);
+  if (q) openNavigation(q);
 });
 $('selectBtn').addEventListener('click', () => setCropMode($('cropPanel').hidden));
-$('readAreaBtn').addEventListener('click', readSelectedArea);
+$('readAreaBtn').addEventListener('click', () => {
+  track('select-area', 'Select area to extract address');
+  readSelectedArea();
+});
+initAnalytics();
 setupCrop();
 
 // Warm up the OCR engine in the background so the first scan is quicker.
