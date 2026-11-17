@@ -9,3 +9,7 @@ export const IGNORE_ADDRESSES = [
 // https://annadelivery.goatcounter.com — leave empty to turn counting off.
 // Only these counts are sent: "camera scan" and "select area". No photos or addresses.
 export const GOATCOUNTER_CODE = '';
+
+// Also count uses from your own computer / home Wi-Fi (localhost, 192.168.x.x).
+// Handy for testing the dashboard; set to false later to keep your own tests out of the numbers.
+export const COUNT_LOCAL_TESTS = true;

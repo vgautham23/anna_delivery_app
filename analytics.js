@@ -1,6 +1,6 @@
 // Anonymous usage counts sent to GoatCounter (dashboard is private to the account owner).
 // Sends only an event name: no photos, no addresses, no cookies.
-import { GOATCOUNTER_CODE } from './config.js';
+import { GOATCOUNTER_CODE, COUNT_LOCAL_TESTS } from './config.js';
 
 const queue = [];
 let loaded = false;
@@ -17,6 +17,7 @@ export function initAnalytics() {
   s.async = true;
   s.src = 'https://gc.zgo.at/count.js';
   s.dataset.goatcounter = `https://${GOATCOUNTER_CODE}.goatcounter.com/count`;
+  if (COUNT_LOCAL_TESTS) s.dataset.goatcounterSettings = JSON.stringify({ allow_local: true });
   s.onload = flush;
   document.head.appendChild(s);
 }
